@@ -18,6 +18,15 @@ const parseData = () => {
     return [arrayLeft, arrayRight];
 };
 
+const getSortedData = () => {
+    let [unsortedLeft, unsortedRight] = parseData();
+
+    let arrayLeft = sortIncreasing(unsortedLeft);
+    let arrayRight = sortIncreasing(unsortedRight);
+
+    return [arrayLeft, arrayRight];
+}
+
 const sortIncreasing = (array) => {
     return array.sort((a, b) => {return a - b});
 }
@@ -34,14 +43,23 @@ const findTotalSum = (array) => {
     };
 
     return sum;
-}
+};
+
+const countAppearances = (num, array) => {
+    let total = 0;
+
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === num) {
+            total += 1;
+        }
+    };
+
+    return total;
+};
 
 const solve1 = () => {
-    let [arrayLeft, arrayRight] = parseData();
-
     // 1) pair smallest number in left list w/ smallest number in right list, increase
-    arrayLeft = sortIncreasing(arrayLeft);
-    arrayRight = sortIncreasing(arrayRight);
+    const [arrayLeft, arrayRight] = getSortedData();
 
     // 2) figure out how far apart numbers are
     let differences = [];
@@ -55,4 +73,16 @@ const solve1 = () => {
 
 };
 
-solve();
+const solve2 = () => {
+    const [arrayLeft, arrayRight] = getSortedData();
+
+    const similarityScores = [];
+
+    // for each number in left list multiply by number of times it appears in right list
+    for (let i = 0; i < arrayLeft.length; i++) {
+        similarityScores.push(arrayLeft[i] * countAppearances(arrayLeft[i], arrayRight));
+    };
+
+    console.log(findTotalSum(similarityScores));
+
+};

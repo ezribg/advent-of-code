@@ -66,7 +66,21 @@ const parseArrayIntoInt = (array) => {
     return parsedArray;
 }
 
-const solve = () => {
+const isSafeWithRemovedLevel = (report) => {
+
+    for (let i = 0; i < report.length; i++) {
+        let tempReport = [...report];
+        tempReport.splice(i, 1);
+
+        if (isSafe(tempReport)) {
+            return true;
+        }
+    };
+
+    return false;
+}
+
+const solve1 = () => {
     let safeReportCount = 0;
     let report = [];
 
@@ -82,4 +96,20 @@ const solve = () => {
     console.log(safeReportCount);
 };
 
-solve();
+const solve2 = () => {
+    let safeReportCount = 0;
+    let report = [];
+
+    for (let i = 0; i < input.length; i++) {
+        report = parseArrayIntoInt(splitReport(input[i]));
+
+        if (isSafe(report) || isSafeWithRemovedLevel(report)) {
+            safeReportCount += 1;
+        };
+    
+    };
+
+    console.log(safeReportCount);
+};
+
+solve2();

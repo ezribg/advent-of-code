@@ -14,3 +14,13 @@ export const findTotalSum = (array) => {
 
     return sum;
 };
+
+export const parseArrayIntoInt = (array) => {
+    let parsedArray = []
+
+    for (let i = 0; i < array.length; i++) {
+        parsedArray.push(parseInt(array[i]));
+    };
+
+    return parsedArray;
+}

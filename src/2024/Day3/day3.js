@@ -1,4 +1,4 @@
-import { parseData, findTotalSum } from '../../utils.js'
+import { parseData, findTotalSum, parseArrayIntoInt } from '../../utils.js'
 import { readFileSync } from 'fs';
 
 const input = readFileSync('./input3.txt', 'utf8').trimEnd();
@@ -10,23 +10,47 @@ const isValidNumber = (string) => {
     return true;
 }
 
-const getPossibleViableData = (inputType) => {
-    let splitInput = testInput.split('mul(');
-    let potentialData = []
+const splitData = (inputType) => {
+    let splitInput = inputType.split('mul(');
+    let newData = []
 
     for (let i = 0; i < splitInput.length; i++) {
-        if (isValidNumber(splitInput[i].charAt(0))) {
-            potentialData.push(splitInput[i]);
+        if (splitInput[i].includes(')')) {
+            newData.push(...splitInput[i].split(')'))
         }
     };
 
-    return potentialData;
+    return newData;
 };
+
+const getValidData = (inputType) => {
+    let separatedData = splitData(inputType);
+    let validData = [];
+
+    for (let i = 0; i < separatedData.length; i++) {
+        if (separatedData[i] != '' && !separatedData[i].includes(' ') && separatedData[i].includes(',') && isValidNumber(separatedData[i].charAt(0)) && isValidNumber(separatedData[i].charAt(separatedData[i].length - 1))) {
+            validData.push(separatedData[i]);
+        }
+    };
+
+    return validData;
+}
+
+const getProductFromString = (string) => {
+    let parsedNumbers = parseArrayIntoInt(string.split(','));
+    return parsedNumbers[0] * parsedNumbers[1];
+}
 
 const solve = () => {
     let multSum = 0;
 
-    console.log(getPossibleViableData(testInput));
+    let data = getValidData(testInput);
+
+    for (let i = 0; i < data.length; i++) {
+        multSum += getProductFromString(data[i]);
+    };
+    
+    console.log(multSum);
 
 };
 

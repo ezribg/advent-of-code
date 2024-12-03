@@ -1,7 +1,7 @@
 import { parseData, findTotalSum } from '../../utils.js'
 
-const input = parseData('./input-02.txt');
-// const input = parseData('./input-02-test.txt');
+const input = parseData('./input2.txt');
+// const input = parseData('./input2-test.txt');
 
 const splitReport = (report) => {return report.split(' ')};
 

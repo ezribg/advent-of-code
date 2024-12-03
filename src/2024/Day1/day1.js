@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const input = fs.readFileSync('./input-01.txt', 'utf8').trimEnd();
+const input = fs.readFileSync('./input1.txt', 'utf8').trimEnd();
 
 // * Create and return left and right array from data
 const parseData = () => {

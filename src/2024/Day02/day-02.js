@@ -1,6 +1,7 @@
 import { parseData, findTotalSum } from '../../utils.js'
 
-const input = parseData('./input-02.txt')
+const input = parseData('./input-02.txt');
+// const input = parseData('./input-02-test.txt');
 
 const splitReport = (report) => {return report.split(' ')};
 
@@ -55,28 +56,30 @@ const isSafe = (report) => {
     return ((isIncreasing(report) || isDecreasing(report)) && levelsAreValid(report));
 };
 
+const parseArrayIntoInt = (array) => {
+    let parsedArray = []
+
+    for (let i = 0; i < array.length; i++) {
+        parsedArray.push(parseInt(array[i]));
+    };
+
+    return parsedArray;
+}
+
 const solve = () => {
-    // let safeReportCount = 0;
-    // let report = [];
+    let safeReportCount = 0;
+    let report = [];
 
-    // for (let i = 0; i < input.length; i++) {
-    //     report = splitReport(input[i]);
+    for (let i = 0; i < input.length; i++) {
+        report = parseArrayIntoInt(splitReport(input[i]));
         
-    //     if (isSafe(report)) {
-    //         safeReportCount += 1;
-    //     }
-    // };
-
-    console.log('47' - '49');
-
-    let reportTest = [28, 27, 24, 22, 19];
-    // console.log(isIncreasing(reportTest));
-    // console.log(isDecreasing(reportTest));
-    // console.log(levelsAreValid(reportTest));
-    // console.log(input);
+        if (isSafe(report)) {
+            safeReportCount += 1;
+        }
+    };
 
     // Answer: How many reports are safe?
-    // console.log(safeReportCount);
+    console.log(safeReportCount);
 };
 
 solve();

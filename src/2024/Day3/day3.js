@@ -1,8 +1,8 @@
 import { parseData, findTotalSum } from '../../utils.js'
 import { readFileSync } from 'fs';
 
-const input = readFileSync('./input3.txt', 'utf8').trimEnd().split('');
-const testInput = readFileSync('./input3-test.txt', 'utf8').trimEnd().split('');
+const input = readFileSync('./input3.txt', 'utf8').trimEnd();
+const testInput = readFileSync('./input3-test.txt', 'utf8').trimEnd();
 
 const isValidNumber = (string) => {
     let num = Number(string);
@@ -10,33 +10,23 @@ const isValidNumber = (string) => {
     return true;
 }
 
-const getMulString = (data) => {
-    let mulString = "";
+const getPossibleViableData = (inputType) => {
+    let splitInput = testInput.split('mul(');
+    let potentialData = []
 
-    for (let i = 0; i < data.length; i++) {
-        // Yes this is a nightmare but i dont care
-        if (mulString === "" && data[i] === "m") {
-            mulString += data[i]
-        } else if (mulString === "m" && data[i] === "u") {
-            mulString += data[i]
-        } else if (mulString === "mu" && data[i] === "l") {
-            mulString += data[i]
-        } else if (mulString === "mul" && data[i] === "(") {
-            mulString += data[i]
-        } else {
-            mulString = "";
+    for (let i = 0; i < splitInput.length; i++) {
+        if (isValidNumber(splitInput[i].charAt(0))) {
+            potentialData.push(splitInput[i]);
         }
-        // } else if (mulString.startsWith("mul(") && isValidNumber(data[i])) {
-        //     mulString += data[i]
-        // } else if (mulString.length)
     };
 
-    return mulString;
-
-}
+    return potentialData;
+};
 
 const solve = () => {
     let multSum = 0;
+
+    console.log(getPossibleViableData(testInput));
 
 };
 

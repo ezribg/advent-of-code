@@ -1,12 +1,12 @@
 import { parseData, findTotalSum, parseArrayIntoInt } from '../../utils.js'
-import { readFileSync } from 'fs';
+import { readFileSync, writeFile } from 'fs';
 
 const input = readFileSync('./input3.txt', 'utf8').trimEnd();
-const testInput = readFileSync('./input3-test.txt', 'utf8').trimEnd();
+// const testInput = readFileSync('./input3-test.txt', 'utf8').trimEnd();
 
 const isValidNumber = (string) => {
     let num = Number(string);
-    if (isNaN(num)) {return false};
+    if (isNaN(num)) { return false };
     return true;
 }
 
@@ -42,15 +42,31 @@ const getProductFromString = (string) => {
 }
 
 const solve = () => {
-    let multSum = 0;
+    // let multSum = 0;
 
-    let data = getValidData(testInput);
+    // let data = getValidData(testInput);
+
+    // for (let i = 0; i < data.length; i++) {
+    //     multSum += getProductFromString(data[i]);
+    // };
+
+    // console.log(multSum);
+
+    let data = getValidData(input);
+
+    let dataString = "";
 
     for (let i = 0; i < data.length; i++) {
-        multSum += getProductFromString(data[i]);
-    };
-    
-    console.log(multSum);
+        dataString += data[i] + "\n"
+    }
+
+    writeFile('output3.txt', dataString, (err) => {
+        if (err) {
+            console.error('Error writing to file:', err);
+        } else {
+            console.log('File written successfully!');
+        }
+    });
 
 };
 

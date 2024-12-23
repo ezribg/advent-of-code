@@ -3,6 +3,7 @@ import { readFileSync, writeFile } from 'fs';
 
 const input = readFileSync('./input3.txt', 'utf8').trimEnd();
 // const testInput = readFileSync('./input3-test.txt', 'utf8').trimEnd();
+const validCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',']
 
 const isValidNumber = (string) => {
     let num = Number(string);
@@ -23,15 +24,24 @@ const splitData = (inputType) => {
     return newData;
 };
 
+const containsValidCharacters = (string) => {
+    for (let i = 0; i < string.length; i++) {
+        if (!validCharacters.includes(string[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
 const getValidData = (inputType) => {
     let separatedData = splitData(inputType);
     let validData = [];
 
     for (let i = 0; i < separatedData.length; i++) {
-        if (separatedData[i] != '' && !separatedData[i].includes(' ') && separatedData[i].includes(',') && isValidNumber(separatedData[i].charAt(0)) && isValidNumber(separatedData[i].charAt(separatedData[i].length - 1))) {
+        if (separatedData[i] != '' && separatedData[i] != ',' && separatedData[i].includes(',') && containsValidCharacters(separatedData[i])) {
             validData.push(separatedData[i]);
         }
-    };
+    }
 
     return validData;
 }
@@ -41,33 +51,50 @@ const getProductFromString = (string) => {
     return parsedNumbers[0] * parsedNumbers[1];
 }
 
-const solve = () => {
-    // let multSum = 0;
+const removeDont = (string) => {
+    let newString = `${string}`
 
-    // let data = getValidData(testInput);
+    if (string.includes("don't()")) {
+        newString = string.substring(0, string.indexOf("don't()"));
+    }
+    return newString;
+}
 
-    // for (let i = 0; i < data.length; i++) {
-    //     multSum += getProductFromString(data[i]);
-    // };
-
-    // console.log(multSum);
-
-    let data = getValidData(input);
-
-    let dataString = "";
+const getExecutableData = () => {
+    let data = input.split('do()');
 
     for (let i = 0; i < data.length; i++) {
-        dataString += data[i] + "\n"
+        data[i] = removeDont(data[i]);
     }
 
-    writeFile('output3.txt', dataString, (err) => {
-        if (err) {
-            console.error('Error writing to file:', err);
-        } else {
-            console.log('File written successfully!');
-        }
-    });
+    return data;
+}
+
+const solve1 = (inputData) => {
+    let multSum = 0;
+
+    let data = getValidData(inputData);
+
+    for (let i = 0; i < data.length; i++) {
+        multSum += getProductFromString(data[i]);
+    };
+
+    return multSum;
 
 };
 
-solve();
+const solve2 = () => {
+
+    let data = getExecutableData();
+
+    let multSum = 0;
+
+    for (let i = 0; i < data.length; i++) {
+        multSum += solve1(data[i]);
+    }
+
+    console.log(multSum);
+
+};
+
+solve2();

@@ -42,6 +42,20 @@ const getVerticalData = (data) => {
     return newData;
 }
 
+
+// IDK MAN
+// const getDiagonalDataLeftToRight = (data) => {
+//     let newData = [];
+
+//     // let row = 0;
+//     for (let i = 0; i < data[0].length; i++) {
+//         let diagonalString = `${data[0][i]}`
+
+//         for
+        
+//     }
+// }
+
 const getAllDirectionCounts = (data) => {
     let count = 0;
 
@@ -70,9 +84,8 @@ const cleanData = (data) => {
 const solve1 = () => {
     let data = cleanData(testInput);
 
-    console.log(getAllDirectionCounts(testInput));
-    // console.log(getVerticalData(data))
-    // console.log(data)
+    // console.log(getAllDirectionCounts(testInput));
+    console.log(testInput.map((a, i) => a[i]))
 };
 
 solve1();
